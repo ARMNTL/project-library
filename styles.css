@@ -6,10 +6,19 @@
 
 body {
     height: 100vh;
-    background-color: aquamarine;
-    /* just to check css is linked */
 }
 
 .main-grid-container {
     display: grid;
+}
+
+/* 3 */
+.library-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+    gap: 1rem;
+}
+
+.card-container {
+    border: 1px solid brown;
 }
