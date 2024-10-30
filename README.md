@@ -5,6 +5,7 @@
 ## Questions
 
 -   For some reason the `required` property in the `input` fields is not working as expected when using a `form` inside a `dialog`.
+-   In the delete book button, I don't like how it's removing all books and recreating the library. This will be a problem with scalability.
 
 ## Steps I made
 
@@ -230,5 +231,43 @@ addBookDialogButton.addEventListener("click", (e) => {
             "Please enter any information about the new book. Can't create an empty book yet T.T"
         );
     }
+});
+```
+
+9. New feature, delete a book. First, adding a button and an ID to the card.
+
+```js
+function createCard(book, index = library.length /* 9 */) {
+    ...
+    // 9
+    const deleteButton = document.createElement("button");
+    deleteButton.setAttribute("id", `book-id-${index}`);
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", (e) => {
+        const id = parseInt(e.target.id.split("-")[2]);
+        library.splice(id, 1);
+
+        const books = document.querySelectorAll(".card-container");
+
+        books.forEach((book) => {
+            book.remove();
+        });
+
+        createLibrary(library);
+    });
+
+    card.appendChild(deleteButton);
+
+    libraryContainer.appendChild(card);
+}
+```
+
+10. Adding the logic to update the read checkbox into the data.
+
+```js
+readCheckbox.setAttribute("id", `checkbox-id-${index}`);
+readCheckbox.addEventListener("click", (e) => {
+    const id = parseInt(e.target.id.split("-")[2]);
+    library[id].isRead = e.target.checked;
 });
 ```

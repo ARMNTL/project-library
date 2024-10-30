@@ -10,7 +10,7 @@ function Book(title, author, pages, isRead = false) {
 
 Book.prototype.info = function () {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${
-        isRead ? "Already Read" : "Not Read Yet"
+        isRead ? "already read" : "not read yet"
     }`;
 };
 
@@ -26,7 +26,7 @@ seedInitialBooks();
 // console.table(library);
 
 // 4, 5
-function createCard(book) {
+function createCard(book, index = library.length /* 9 */) {
     const card = document.createElement("div");
     card.setAttribute("class", "card-container");
 
@@ -46,20 +46,44 @@ function createCard(book) {
     readCheckbox.setAttribute("type", "checkbox");
     readCheckbox.setAttribute("name", "read-checkbox");
     readCheckbox.checked = book.isRead;
+    // 10
+    readCheckbox.setAttribute("id", `checkbox-id-${index}`);
+    readCheckbox.addEventListener("click", (e) => {
+        const id = parseInt(e.target.id.split("-")[2]);
+        library[id].isRead = e.target.checked;
+    });
 
     const readLabel = document.createElement("label");
     readLabel.textContent = " Not Yet Read";
     readLabel.prepend(readCheckbox);
-
     card.appendChild(readLabel);
+
+    // 9
+    const deleteButton = document.createElement("button");
+    deleteButton.setAttribute("id", `book-id-${index}`);
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", (e) => {
+        const id = parseInt(e.target.id.split("-")[2]);
+        library.splice(id, 1);
+
+        const books = document.querySelectorAll(".card-container");
+
+        books.forEach((book) => {
+            book.remove();
+        });
+
+        createLibrary(library);
+    });
+
+    card.appendChild(deleteButton);
 
     libraryContainer.appendChild(card);
 }
 
 // 6
 function createLibrary(library) {
-    library.forEach((book) => {
-        createCard(book);
+    library.forEach((book, index) => {
+        createCard(book, index);
     });
 }
 
@@ -89,7 +113,6 @@ newBookButton.addEventListener("click", () => {
 
 addBookDialogButton.addEventListener("click", (e) => {
     e.preventDefault();
-
     const title = titleInput.value;
     const author = authorInput.value;
     const pages = pagesInput.value;
@@ -102,6 +125,7 @@ addBookDialogButton.addEventListener("click", (e) => {
             pages || "Unknown number of",
             isRead
         );
+
         createCard(newBook);
 
         dialog.close();
