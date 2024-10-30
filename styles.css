@@ -22,3 +22,9 @@ body {
 .card-container {
     border: 1px solid brown;
 }
+
+/* 7 */
+::backdrop {
+    background-color: lightslategray;
+    opacity: 0.25;
+}

@@ -43,13 +43,14 @@ function createCard(book) {
     card.appendChild(pages);
 
     const readCheckbox = document.createElement("input");
-    readCheckbox.setAttribute("id", "book-read");
     readCheckbox.setAttribute("type", "checkbox");
-    card.appendChild(readCheckbox);
+    readCheckbox.setAttribute("name", "read-checkbox");
+    readCheckbox.checked = book.isRead;
 
     const readLabel = document.createElement("label");
-    readLabel.setAttribute("for", "book-read");
-    readLabel.textContent = "Not Read Yet";
+    readLabel.textContent = " Not Yet Read";
+    readLabel.prepend(readCheckbox);
+
     card.appendChild(readLabel);
 
     libraryContainer.appendChild(card);
@@ -63,3 +64,50 @@ function createLibrary(library) {
 }
 
 createLibrary(library);
+
+// 8
+const dialog = document.querySelector("dialog");
+const newBookButton = document.querySelector(".new-book-button");
+const finishDialogButton = document.querySelector(".finish-dialog-button");
+const addBookDialogButton = document.querySelector(".add-book-dialog-button");
+
+// grab all input elements
+const titleInput = document.querySelector("#book-title");
+const authorInput = document.querySelector("#book-author");
+const pagesInput = document.querySelector("#book-pages");
+const readInput = document.querySelector("#book-read");
+
+newBookButton.addEventListener("click", () => {
+    // reset all input values
+    titleInput.value = "";
+    authorInput.value = "";
+    pagesInput.value = "";
+    readInput.checked = false;
+
+    dialog.showModal();
+});
+
+addBookDialogButton.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const title = titleInput.value;
+    const author = authorInput.value;
+    const pages = pagesInput.value;
+    const isRead = readInput.checked;
+
+    if (title || author || pages) {
+        const newBook = new Book(
+            title || "Unknown - No Title",
+            author || "Unknown",
+            pages || "Unknown number of",
+            isRead
+        );
+        createCard(newBook);
+
+        dialog.close();
+    } else {
+        alert(
+            "Please enter any information about the new book. Can't create an empty book yet T.T"
+        );
+    }
+});

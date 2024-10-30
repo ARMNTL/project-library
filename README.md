@@ -2,6 +2,10 @@
 
 ## Credits
 
+## Questions
+
+-   For some reason the `required` property in the `input` fields is not working as expected when using a `form` inside a `dialog`.
+
 ## Steps I made
 
 1. Creating the Book object constructor.
@@ -136,4 +140,95 @@ function createLibrary(library) {
 }
 
 createLibrary(library);
+```
+
+7. Creating a dialog box that includes the form for new books.
+
+```html
+<dialog>
+    <p>Add new book</p>
+    <form>
+        <p>
+            <label for="book-title">Title: </label>
+            <input id="book-title" name="book-title" type="text" required />
+        </p>
+
+        <p>
+            <label for="book-author">Author: </label>
+            <input id="book-author" name="book-author" type="text" required />
+        </p>
+
+        <p>
+            <label for="book-pages">Number of pages: </label>
+            <input id="book-pages" name="book-pages" type="number" required />
+        </p>
+
+        <p>
+            <input id="book-read" name="book-read" type="checkbox" />
+            <label for="book-read">Not Read Yet</label>
+        </p>
+        <button
+            class="finish-dialog-button"
+            value="finished"
+            formmethod="dialog"
+            autofocus
+            formnovalidate
+        >
+            Cancel
+        </button>
+        <button type="submit" class="add-book-dialog-button" value="default">
+            Add Book
+        </button>
+    </form>
+</dialog>
+```
+
+8. Coding the logic for creating new books.
+
+```js
+const dialog = document.querySelector("dialog");
+const newBookButton = document.querySelector(".new-book-button");
+const finishDialogButton = document.querySelector(".finish-dialog-button");
+const addBookDialogButton = document.querySelector(".add-book-dialog-button");
+
+// grab all input elements
+const titleInput = document.querySelector("#book-title");
+const authorInput = document.querySelector("#book-author");
+const pagesInput = document.querySelector("#book-pages");
+const readInput = document.querySelector("#book-read");
+
+newBookButton.addEventListener("click", () => {
+    // reset all input values
+    titleInput.value = "";
+    authorInput.value = "";
+    pagesInput.value = "";
+    readInput.checked = false;
+
+    dialog.showModal();
+});
+
+addBookDialogButton.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const title = titleInput.value;
+    const author = authorInput.value;
+    const pages = pagesInput.value;
+    const isRead = readInput.checked;
+
+    if (title || author || pages) {
+        const newBook = new Book(
+            title || "Unknown - No Title",
+            author || "Unknown",
+            pages || "Unknown number of",
+            isRead
+        );
+        createCard(newBook);
+
+        dialog.close();
+    } else {
+        alert(
+            "Please enter any information about the new book. Can't create an empty book yet T.T"
+        );
+    }
+});
 ```

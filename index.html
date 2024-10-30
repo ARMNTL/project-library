@@ -8,6 +8,63 @@
         <script src="./index.js" defer></script>
     </head>
     <body>
+        <!-- 7 -->
+        <dialog>
+            <p>Add new book</p>
+            <form>
+                <p>
+                    <label for="book-title">Title: </label>
+                    <input
+                        id="book-title"
+                        name="book-title"
+                        type="text"
+                        required
+                    />
+                </p>
+
+                <p>
+                    <label for="book-author">Author: </label>
+                    <input
+                        id="book-author"
+                        name="book-author"
+                        type="text"
+                        required
+                    />
+                </p>
+
+                <p>
+                    <label for="book-pages">Number of pages: </label>
+                    <input
+                        id="book-pages"
+                        name="book-pages"
+                        type="number"
+                        required
+                    />
+                </p>
+
+                <p>
+                    <input id="book-read" name="book-read" type="checkbox" />
+                    <label for="book-read">Not Read Yet</label>
+                </p>
+                <button
+                    class="finish-dialog-button"
+                    value="finished"
+                    formmethod="dialog"
+                    autofocus
+                    formnovalidate
+                >
+                    Cancel
+                </button>
+                <button
+                    type="submit"
+                    class="add-book-dialog-button"
+                    value="default"
+                >
+                    Add Book
+                </button>
+            </form>
+        </dialog>
+
         <div class="main-grid-container">
             <div class="library-container">
                 <!-- 3 -->
@@ -19,6 +76,9 @@
                         <input id="book-read" type="checkbox" />Not Read Yet
                     </label>
                 </div> -->
+
+                <!-- 7 -->
+                <button class="new-book-button">New Book</button>
             </div>
         </div>
     </body>
