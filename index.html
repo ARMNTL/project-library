@@ -7,9 +7,9 @@
         <link rel="stylesheet" href="./styles.css" />
         <script src="./index.js" defer></script>
     </head>
-    <body>
+    <body class="prevent-select">
         <!-- 7 -->
-        <dialog>
+        <dialog class="prevent-select">
             <p>Add new book</p>
             <form>
                 <p>
@@ -33,20 +33,24 @@
                 </p>
 
                 <p>
-                    <label for="book-pages">Number of pages: </label>
-                    <input
-                        id="book-pages"
-                        name="book-pages"
-                        type="number"
-                        required
-                    />
+                    <label for="book-pages">
+                        Number of pages:
+                        <input
+                            id="book-pages"
+                            name="book-pages"
+                            type="number"
+                            min="0"
+                            required
+                        />
+                    </label>
                 </p>
 
                 <p>
                     <input id="book-read" name="book-read" type="checkbox" />
-                    <label for="book-read">Not Read Yet</label>
+                    <label for="book-read"> Not Read Yet</label>
                 </p>
                 <button
+                    id="cancel-button"
                     class="finish-dialog-button"
                     value="finished"
                     formmethod="dialog"
@@ -56,6 +60,7 @@
                     Cancel
                 </button>
                 <button
+                    id="add-button"
                     type="submit"
                     class="add-book-dialog-button"
                     value="default"
@@ -78,7 +83,7 @@
                 </div> -->
 
                 <!-- 7 -->
-                <button class="new-book-button">New Book</button>
+                <button class="new-book-button">Add New Book</button>
             </div>
         </div>
     </body>

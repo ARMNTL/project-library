@@ -1,7 +1,5 @@
 # The Odin Project: Library
 
-## Credits
-
 ## Questions
 
 -   For some reason the `required` property in the `input` fields is not working as expected when using a `form` inside a `dialog`.
@@ -197,6 +195,11 @@ const titleInput = document.querySelector("#book-title");
 const authorInput = document.querySelector("#book-author");
 const pagesInput = document.querySelector("#book-pages");
 const readInput = document.querySelector("#book-read");
+const readLabel = document.querySelector("label[for='book-read']");
+
+readInput.addEventListener("click", (e) => {
+    readLabel.textContent = e.target.checked ? "Already Read" : "Not Read Yet";
+});
 
 newBookButton.addEventListener("click", () => {
     // reset all input values
@@ -223,6 +226,9 @@ addBookDialogButton.addEventListener("click", (e) => {
             pages || "Unknown number of",
             isRead
         );
+
+        library.push(newBook);
+
         createCard(newBook);
 
         dialog.close();
@@ -270,4 +276,155 @@ readCheckbox.addEventListener("click", (e) => {
     const id = parseInt(e.target.id.split("-")[2]);
     library[id].isRead = e.target.checked;
 });
+```
+
+11. Right now, it's ugly, css to the rescue! First the font.
+
+```css
+body {
+    font-family: "Noto Sans", sans-serif, system-ui;
+    height: 100vh;
+    padding: 1rem;
+}
+```
+
+12. Styling the book cards.
+
+```css
+.card-container {
+    /* 12 */
+    border: 1px solid lightslategray;
+    border-radius: 8px;
+    border-left: 10px solid darkgoldenrod;
+    box-shadow: 1px 5px 10px grey;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.card-container:hover {
+    background-color: lightgrey;
+}
+
+.card-container :first-child {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+```
+
+13. Styling the New Book button.
+
+```css
+.new-book-button {
+    height: 300px;
+    border: 1px solid lightslategray;
+    border-radius: 8px;
+    border-left: 10px solid darkcyan;
+    box-shadow: 1px 5px 10px grey;
+    font-size: 1.5rem;
+}
+
+.new-book-button:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+}
+```
+
+14. Styling the delete buttons.
+
+```css
+.card-container button {
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+    background-color: lightpink;
+    border: none;
+}
+
+.card-container button:hover {
+    background-color: darkred;
+    color: white;
+    cursor: pointer;
+}
+```
+
+15. Lastly, styling the dialog!
+
+```css
+dialog {
+    width: 30%;
+    height: auto;
+    margin: 20vh auto;
+    border: 1px solid darkcyan;
+    border-radius: 8px;
+    border-left: 10px solid darkcyan;
+    box-shadow: 1px 5px 5px darkcyan;
+    padding: 1rem 1.5rem 1rem 1rem;
+}
+
+dialog > p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+dialog input[type="text"],
+dialog input[type="number"] {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    width: 100%;
+}
+
+dialog p:has(label[for="book-read"]) {
+    margin: 2rem 0;
+}
+
+dialog button {
+    font-size: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: white;
+}
+
+#add-button {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    border: 1px solid teal;
+    color: darkcyan;
+}
+
+#add-button:hover {
+    background-color: lightcyan;
+}
+
+#cancel-button {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    border: 1px solid pink;
+    color: darkred;
+}
+
+#cancel-button:hover {
+    background-color: mistyrose;
+}
+```
+
+16. One more thing, I want to make things unselectable, specially the label of the checkbox.
+
+```css
+.prevent-select {
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
 ```

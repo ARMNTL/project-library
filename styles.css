@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -20,11 +22,142 @@ body {
 }
 
 .card-container {
-    border: 1px solid brown;
+    /* 12 */
+    border: 1px solid lightslategray;
+    border-radius: 8px;
+    border-left: 10px solid darkgoldenrod;
+    box-shadow: 1px 5px 10px grey;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.card-container:hover {
+    background-color: lightgrey;
+}
+
+.card-container :first-child {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
 }
 
 /* 7 */
 ::backdrop {
     background-color: lightslategray;
     opacity: 0.25;
+}
+
+/* 11 */
+body {
+    font-family: "Noto Sans", sans-serif, system-ui;
+    height: 100vh;
+    padding: 1rem;
+
+    /* 15 */
+    /* position: relative; */
+}
+
+/* 13 */
+.new-book-button {
+    height: 300px;
+    border: 1px solid lightslategray;
+    border-radius: 8px;
+    border-left: 10px solid darkcyan;
+    box-shadow: 1px 5px 10px grey;
+    font-size: 1.5rem;
+}
+
+.new-book-button:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
+/* 14 */
+.card-container button {
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+    background-color: lightpink;
+    border: none;
+}
+
+.card-container button:hover {
+    background-color: darkred;
+    color: white;
+    cursor: pointer;
+}
+
+/* 15 */
+dialog {
+    width: 30%;
+    height: auto;
+    margin: 20vh auto;
+    border: 1px solid darkcyan;
+    border-radius: 8px;
+    border-left: 10px solid darkcyan;
+    box-shadow: 1px 5px 5px darkcyan;
+    padding: 1rem 1.5rem 1rem 1rem;
+}
+
+dialog>p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+dialog input[type="text"],
+dialog input[type="number"] {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    width: 100%;
+}
+
+dialog p:has(label[for="book-read"]) {
+    margin: 2rem 0;
+}
+
+dialog button {
+    font-size: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: white;
+}
+
+#add-button {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    border: 1px solid teal;
+    color: darkcyan;
+}
+
+#add-button:hover {
+    background-color: lightcyan;
+}
+
+#cancel-button {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    border: 1px solid pink;
+    color: darkred;
+}
+
+#cancel-button:hover {
+    background-color: mistyrose;
+}
+
+/* 16 */
+.prevent-select {
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
 }

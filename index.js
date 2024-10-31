@@ -19,7 +19,6 @@ let library = [];
 
 function seedInitialBooks() {
     library.push(new Book("The Hobbit", "J. R. R. Tolkien", 310));
-    library.push(new Book("NIV Study Bible", "God", 2198));
 }
 
 seedInitialBooks();
@@ -46,15 +45,25 @@ function createCard(book, index = library.length /* 9 */) {
     readCheckbox.setAttribute("type", "checkbox");
     readCheckbox.setAttribute("name", "read-checkbox");
     readCheckbox.checked = book.isRead;
+
     // 10
     readCheckbox.setAttribute("id", `checkbox-id-${index}`);
     readCheckbox.addEventListener("click", (e) => {
         const id = parseInt(e.target.id.split("-")[2]);
         library[id].isRead = e.target.checked;
+        const readLabel = document.querySelector(
+            `label:has(#checkbox-id-${id})`
+        );
+        readLabel.textContent = e.target.checked
+            ? " Already Read"
+            : " Not Read Yet";
+        readLabel.prepend(e.target);
     });
 
     const readLabel = document.createElement("label");
-    readLabel.textContent = " Not Yet Read";
+    readLabel.textContent = readCheckbox.checked
+        ? " Already Read"
+        : " Not Read Yet";
     readLabel.prepend(readCheckbox);
     card.appendChild(readLabel);
 
@@ -62,6 +71,9 @@ function createCard(book, index = library.length /* 9 */) {
     const deleteButton = document.createElement("button");
     deleteButton.setAttribute("id", `book-id-${index}`);
     deleteButton.textContent = "Delete";
+
+    card.appendChild(deleteButton);
+
     deleteButton.addEventListener("click", (e) => {
         const id = parseInt(e.target.id.split("-")[2]);
         library.splice(id, 1);
@@ -74,8 +86,6 @@ function createCard(book, index = library.length /* 9 */) {
 
         createLibrary(library);
     });
-
-    card.appendChild(deleteButton);
 
     libraryContainer.appendChild(card);
 }
@@ -100,6 +110,11 @@ const titleInput = document.querySelector("#book-title");
 const authorInput = document.querySelector("#book-author");
 const pagesInput = document.querySelector("#book-pages");
 const readInput = document.querySelector("#book-read");
+const readLabel = document.querySelector("label[for='book-read']");
+
+readInput.addEventListener("click", (e) => {
+    readLabel.textContent = e.target.checked ? "Already Read" : "Not Read Yet";
+});
 
 newBookButton.addEventListener("click", () => {
     // reset all input values
@@ -107,6 +122,7 @@ newBookButton.addEventListener("click", () => {
     authorInput.value = "";
     pagesInput.value = "";
     readInput.checked = false;
+    readLabel.textContent = "Not Read Yet";
 
     dialog.showModal();
 });
@@ -127,6 +143,8 @@ addBookDialogButton.addEventListener("click", (e) => {
         );
 
         createCard(newBook);
+        // bug fixed: needed to push after creating the card, not before!
+        library.push(newBook);
 
         dialog.close();
     } else {
